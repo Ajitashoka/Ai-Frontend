@@ -1,0 +1,47 @@
+.home-container{
+    display: flex;
+    margin-top: 2rem;
+    width: 100vw;
+    justify-content: space-around;
+    font-size: 16px;
+}
+
+.home-container-left{
+    display: flex;
+    width: 35vw;
+    flex-direction: column;
+}
+
+
+
+.vital-container{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
+.vitals{
+    height: 10rem;
+    width:10rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+.icons{
+    font-size: 1.5rem;
+}
+
+.home-container-right{
+    display: flex;
+    width: 40vw;
+    border-radius: 8px;
+    background-color: rgb(212, 248, 248);
+}
+.sidepannel{
+    display: flex;
+    width:15vw;
+    border-radius: 8px;
+    background-color: rgb(212, 248, 248);
+}
