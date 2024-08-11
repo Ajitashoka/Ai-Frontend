@@ -4,6 +4,7 @@ import { FaHeartPulse } from "react-icons/fa6";
 import { MdBloodtype } from "react-icons/md";
 import { FaTemperatureHigh } from "react-icons/fa6";
 import { BiSolidDonateBlood } from "react-icons/bi";
+import Medical from '../Medical/Medical';
 import Bot from "../Bot/Bot"
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import "./home.css";
@@ -141,6 +142,8 @@ const Home = () => {
         </div>
         </div>  </>:active===1?<>
         <div className="container-toggle"> 
+
+          <Medical/>
           </div>
         </>:<>
         <div className="container-toggle"> 
