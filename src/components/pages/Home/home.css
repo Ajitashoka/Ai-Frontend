@@ -4,6 +4,12 @@
     width: 100vw;
     justify-content: space-around;
     font-size: 16px;
+    overflow:scroll;
+    min-height: 100vh;
+}
+.container-toggle{
+    display:flex;
+    width:70vw;
 }
 
 .home-container-left{
@@ -17,7 +23,7 @@
 .vital-container{
     display: flex;
     justify-content: space-around;
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
 }
 .vitals{
     height: 10rem;
@@ -37,11 +43,30 @@
     display: flex;
     width: 40vw;
     border-radius: 8px;
-    background-color: rgb(212, 248, 248);
+    /* background-color: rgb(212, 248, 248); */
 }
 .sidepannel{
     display: flex;
     width:15vw;
-    border-radius: 8px;
+    flex-direction:column;
+}
+
+.option-buttons{
+    height:3rem;
+    width:15vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
     background-color: rgb(212, 248, 248);
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.active{
+    background-color: #6FEDD6;
+}
+
+.preventive-measures{
+    padding-left: 2rem;
+    font-weight: 400;
 }

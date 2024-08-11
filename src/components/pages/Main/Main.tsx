@@ -1,5 +1,6 @@
 "use client"
 import React ,{useState} from 'react'
+import Typewriter from 'typewriter-effect';
 import Home from "../Home/Home"
 import "./main.css"
 const Main = () => {
@@ -7,11 +8,26 @@ const Main = () => {
   const [inputdata,setInputdata] = useState(true);
   setTimeout(() => {
     setLoading(false)
-  }, 2000); 
+  }, 5000); 
   return (
     <>
       <div className="container">
-        {loading?<p>Hi, this is your virtual doctor!</p>:<>
+        {loading?<div style={{paddingTop:"16rem"}}>
+
+<Typewriter
+  onInit={(typewriter) => {
+    typewriter.typeString('Hi, This is your virtual doctor!')
+      .callFunction(() => {
+        console.log('String typed out!');
+      })
+      .pauseFor(4000)
+      .deleteAll()
+      .callFunction(() => {
+        console.log('All strings were deleted');
+      })
+      .start();
+  }}
+/></div>:<>
           {inputdata?
           <div className="container-inner">
             <div className='gender'>

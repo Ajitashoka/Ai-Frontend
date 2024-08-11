@@ -1,3 +1,3 @@
 import Main from "./pages/Main/Main";
-
-export { Main };
+import Bot from "./pages/Bot/Bot"
+export { Main,Bot };
