@@ -13,7 +13,7 @@ const Medical: React.FC = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container-medical">
       <h1 className="heading">Medical Report Input</h1>
       <textarea
         className="textarea"

@@ -2,7 +2,7 @@
   padding: 0;
   margin: 0;
 }
-.container {
+.container-chat {
   display: flex;
   height: 80%;
   width: 70vw;

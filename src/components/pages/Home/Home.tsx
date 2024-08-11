@@ -4,6 +4,9 @@ import { FaHeartPulse } from "react-icons/fa6";
 import { MdBloodtype } from "react-icons/md";
 import { FaTemperatureHigh } from "react-icons/fa6";
 import { BiSolidDonateBlood } from "react-icons/bi";
+import { SiSamsung } from "react-icons/si";
+import { FaApple } from "react-icons/fa";
+import { FaGoogle } from "react-icons/fa";
 import Medical from '../Medical/Medical';
 import Bot from "../Bot/Bot"
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -55,6 +58,7 @@ const data = [
 ];
 
 const Home = () => {
+  const [signin,setSignin] = useState(null);
   const [livedata,setLivedata] = useState(true);
   const [mhistory,setMhistory] = useState(false);
   const [chatbot,setChatbot] = useState(false);
@@ -81,8 +85,11 @@ const Home = () => {
             setActive(2);
           }} className={active===2?"option-buttons active":"option-buttons"}>Chat Bot</div>
         </div>
-        {active===0?<>     
-        <div className="container-toggle"> 
+
+        {active===0?
+        <> 
+        {signin!==null?<>
+          <div className="container-toggle"> 
         <div className="home-container-left">
             <div className="vital-container">
                 <div  className="vitals" style={{backgroundColor:"pink"}}>
@@ -140,7 +147,36 @@ const Home = () => {
       </AreaChart>
          </div>
         </div>
-        </div>  </>:active===1?<>
+        </div>
+        </>:<>
+        <div className="container-toggle"> 
+          <div className="signin-google"> 
+        <p>SignIn with Google Fit</p>
+      <div className="google-signin-button">
+      <FaGoogle style={{background:"transparent",fontSize:"1.2rem",color:"red"}}/>
+        <p>Sign in with Google</p>
+      </div>
+
+          </div>
+          <div className="signin-google"> 
+        <p>SignIn with Apple Health</p>
+      <div className="google-signin-button">
+      <FaApple style={{background:"transparent",fontSize:"1.2rem",color:"silver"}}/>
+        <p>Sign in Apple</p>
+      </div>
+
+          </div>
+          <div className="signin-google"> 
+        <p>SignIn with Samsung Fit</p>
+      <div className="google-signin-button">
+      <SiSamsung  style={{background:"transparent",fontSize:"1.2rem",color:"black"}}/>
+        <p>Sign in with Samsung</p>
+      </div>
+
+          </div>
+        </div></>}
+            
+          </>:active===1?<>
         <div className="container-toggle"> 
 
           <Medical/>

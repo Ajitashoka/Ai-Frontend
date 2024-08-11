@@ -36,7 +36,7 @@ export default function Chat({ messages }) {
   }, [messages]);
 
   return (
-    <div className="container">
+    <div className="container-chat">
       <div className="chat-container" ref={messageEl}>
         <div className="messages" >
           {messages.length > 0 ? (

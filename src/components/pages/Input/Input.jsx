@@ -166,12 +166,9 @@ function Input({ setMessages, setIsloading }) {
     const data = {
       data: audiot,
       start: type,
-      method: "DEEPGRAM",
     };
 
     const url = "http://localhost:8000/process/";
-
-    // const url = "http://localhost:7000/process/";
     axios
       .post(url, data)
       .then((response) => {
