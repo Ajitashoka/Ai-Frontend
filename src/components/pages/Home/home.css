@@ -7,9 +7,12 @@
     overflow:scroll;
     min-height: 100vh;
 }
+
+
 .container-toggle{
     display:flex;
     width:70vw;
+    padding-bottom: 5rem;
 }
 
 .home-container-left{
@@ -43,7 +46,7 @@
     display: flex;
     width: 40vw;
     border-radius: 8px;
-    /* background-color: rgb(212, 248, 248); */
+    flex-direction: column;
 }
 .sidepannel{
     display: flex;
@@ -67,8 +70,9 @@
 }
 
 .preventive-measures{
-    padding-left: 2rem;
+    padding-left: 5rem;
     font-weight: 400;
+    padding-top: 2rem;
 }
 
 

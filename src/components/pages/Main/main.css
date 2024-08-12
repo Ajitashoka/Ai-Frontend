@@ -6,12 +6,12 @@
 }
 
 .container {
-  height: 100vh;
+
   width: 100vw;
   display: flex;
   color: black;
   justify-content: center;
-  align-items: center;
+
   font-size: 3rem;
   font-weight: bold;
   background-color: rgb(245, 245, 245);
@@ -24,6 +24,8 @@
   align-items: center;
   flex-direction: column;
   background-color: rgb(245, 245, 245);
+  transform: translateY(-50%);
+  margin-top: 24%;
 }
 
 .input {

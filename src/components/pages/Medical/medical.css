@@ -1,41 +1,52 @@
 .container-medical {
-   
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 20px; 
-  }
-  
-  .heading {
-    font-size: 2rem;
-    color: #333;
-  }
-  
-  .textarea {
-    width: 50%;
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    resize: none;
-  }
-  
-  .textarea:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  .readOnlyTextarea {
-    background-color: #e9ecef;
-    cursor: not-allowed;
-  }
-  
-  .outputHeading {
-    font-size: 1.5rem;
-    color: #666;
-  }
+  padding: 20px;
+  background-color: rgb(245, 245, 245);;
+  border-radius: 8px;
+ justify-content: center;
+  display: flex;
+  flex-direction: column;
+  width: 70vw;
+  color:black;
+  align-items: center;
+}
+.file-input-container{
+  padding: 20px 0px 20px 0px;
+  background-color: rgb(245, 245, 245);
+  display: flex;
+  color:black;
+  flex-direction: column;
+
+  align-items: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 30vw;
+  border-radius: 8px;
+}
+.heading {
+  font-size: 1.2rem;
+  color: #000000;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.file-input{
+
+  display: none;
+
+}
+.file-input-label {
+  display: inline-block;
+  width: 6rem;
+  height: 2rem;
+  background-color: rgb(94, 176, 234); 
+  color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+  line-height: 2rem;
+  cursor: pointer;
+  font-size: 16px; 
+  font-family: Arial, sans-serif;
+}
+.file-input-label:hover{
+  background-color: rgb(238, 144, 144);
+}

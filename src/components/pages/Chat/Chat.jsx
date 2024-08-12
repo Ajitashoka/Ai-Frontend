@@ -78,7 +78,7 @@ export default function Chat({ messages }) {
                         </label>
                         {message.text.map((data, dataIndex) => (
                           <div key={dataIndex} className="bot-response">
-                            <div className="left">{data.currentuser} :</div>
+                            
                             <div className="right">{data.message}</div>
                           </div>
                         ))}
@@ -88,17 +88,16 @@ export default function Chat({ messages }) {
                 ) : (
                   <div className="bot">
                     <label
-                      style={{ fontSize: "1rem", fontWeight: "500" }}
+                      style={{ fontSize: "1rem", fontWeight: "500",paddingBottom:"4px" }}
                       htmlFor={`audio-${index}`}
                     >
-                      Sentiment Analysis :
+                      Health Report :
                     </label>
-                    {message.response.map((data, dataIndex) => (
-                      <div key={dataIndex} className="bot-response">
-                        <div className="left">{data.speaker} :</div>
-                        <div className="right">{data.value}</div>
-                      </div>
-                    ))}
+                    
+                      <div className="bot-response">
+                      <div dangerouslySetInnerHTML={{ __html: message.response }} />
+                      </div>  
+                    
                   </div>
                 )}
               </div>

@@ -1,15 +1,18 @@
 "use client"
-import React, { useState } from 'react';
-import { FaHeartPulse } from "react-icons/fa6";
+import React, { useState,useEffect } from 'react';
+import { FaHeartPulse,FaPersonWalking } from "react-icons/fa6";
 import { MdBloodtype } from "react-icons/md";
-import { FaTemperatureHigh } from "react-icons/fa";
+import { FaTemperatureHigh,FaFire } from "react-icons/fa";
 import { BiSolidDonateBlood } from "react-icons/bi";
 import { SiSamsung } from "react-icons/si";
 import { FaApple, FaGoogle } from "react-icons/fa";
+import { IoTime } from "react-icons/io5";
+import { MdSportsMartialArts } from "react-icons/md";
 import Medical from '../Medical/Medical';
 import Bot from "../Bot/Bot";
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
+import { PieChart, Pie, Cell } from "recharts";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import "./home.css";
 
@@ -32,7 +35,8 @@ const data = [
   { name: "30", uv: 3490, pv: 4300, amt: 2100 },
 ];
 
-const Home: React.FC = () => {
+const Home: React.FC = ({age,height,weight,selectedGender}) => {
+  const [res,setRes] = useState('')
   const [token, setToken] = useState<string>("");
   const [userdata, setUserdata] = useState<any>(null);
 
@@ -42,7 +46,68 @@ const Home: React.FC = () => {
     calories: 0,
     activeminutes: 0
   });
+  useEffect(() => {
+    let data = `Using the medical records and the below health parameters, what could be the preventive measures 
+    taken for better health.
+    'steps':${vitals.steps},
+    'clories burned':${vitals.calories},
+    'Heart minutes':${vitals.heartminute},
+    'activity minutes':${vitals.activeminutes},
+    'age in years':${age},
+    'height in centimeters':${height},
+    'weight in kiligrams':${weight},
+    'Gender':${selectedGender}
+  }
+    '''. Act as a doctor and analyze the health factors associated with the patient from the provided information.
+Return the response in HTML format and do not mention a text like "Here is your response in HTML'''.  
+    `
+    let data1 = "Using the medical reports and all historical data. Return a only integer value between 0 and 100"
+    getHealthScore(data1);
+    getHealthReport(data);
+  }, [userdata])
+  
 
+  async function getHealthReport(data:string) {
+    const url = "http://localhost:8000/process/";
+    try {
+      const formData = new FormData();
+      formData.append("text_data", data)
+      formData.append("data_type","text")
+      
+      const response = await axios.post(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      console.log("beforeset", response.data.processed_text);
+      console.log("wegotoutput", response.data.processed_text.response);
+      setRes(response.data.processed_text.response)
+    } catch (error) {
+      console.error("error", error);
+    }
+  }
+
+  async function getHealthScore(data:string) {
+    const url = "http://localhost:8000/process/";
+    try {
+      const formData = new FormData();
+      formData.append("text_data", data)
+      formData.append("data_type","text")
+      
+      const response = await axios.post(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      console.log("beforeset", response.data.processed_text);
+      console.log("wegotoutput", response.data.processed_text.response);
+      setScore(response.data.processed_text.response)
+    } catch (error) {
+      console.error("error", error);
+    }
+  }
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
@@ -72,7 +137,7 @@ const Home: React.FC = () => {
             { dataTypeName: 'com.google.step_count.delta' },
             { dataTypeName: 'com.google.calories.expended' },
             { dataTypeName: 'com.google.heart_minutes' },
-            { dataTypeName: 'com.google.active_minutes' }
+            { dataTypeName: 'com.google.active_minutes' },
           ],
           bucketByTime: { durationMillis: 86400000 },
           startTimeMillis: Date.now() - 7 * 24 * 60 * 60 * 1000, 
@@ -95,13 +160,19 @@ const Home: React.FC = () => {
             const dataType = dataset.point[0]?.dataTypeName;
 
             if (dataType === 'com.google.step_count.delta') {
+              
               newVitals.steps = point.value[0]?.intVal || 0;
+              console.log(newVitals.steps);
             } else if (dataType === 'com.google.calories.expended') {
               newVitals.calories = point.value[0]?.fpVal || 0;
-            } else if (dataType === 'com.google.heart_minutes') {
+            } else if (dataType === 'com.google.heart_minutes.summary') {
               newVitals.heartminute = point.value[0]?.fpVal || 0;
             } else if (dataType === 'com.google.active_minutes') {
               newVitals.activeminutes = point.value[0]?.intVal || 0;
+            }
+            else if(dataType=='com.google.blood_pressure')
+            {
+              console.log("sdasdd");
             }
           });
         });
@@ -116,6 +187,12 @@ const Home: React.FC = () => {
       console.error('Error fetching Google Fit data:', error);
     }
   };
+ const [score,setScore] = useState('0');
+  const data = [
+    { name: "Group A", value: 100-parseInt(score) },
+    { name: "Group B", value: parseInt(score) },
+  ];
+  const COLORS = [ "#438AF61A","#179BAE"];
 
   const [signin, setSignin] = useState<boolean>(false);
   const [livedata, setLivedata] = useState<boolean>(true);
@@ -125,6 +202,8 @@ const Home: React.FC = () => {
 
   return (
     <div className="home-container">
+      
+      
       <div className="sidepannel">
         <div onClick={() => {
           setChatbot(false);
@@ -158,6 +237,30 @@ const Home: React.FC = () => {
             <div className="container-toggle">
               <div className="home-container-left">
                 <div className="vital-container">
+                  <div className="vitals" style={{ backgroundColor: "#E2BFD9" }}>
+                    <FaPersonWalking className="icons" style={{ backgroundColor: "#E2BFD9", color: "674188", marginBottom: "0.5rem" }} />
+                    <p style={{ backgroundColor: "#E2BFD9", fontSize: "12px", marginBottom: "1rem" }}>Steps</p>
+                    <p style={{ backgroundColor: "#E2BFD9" }}>{vitals.steps}</p>
+                  </div>
+                  <div className="vitals" style={{ backgroundColor: "#EB5B00" }}>
+                    <FaFire className='icons' style={{ backgroundColor: "#EB5B00", color: "B43F3F", marginBottom: "0.5rem" }} />
+                    <p style={{ backgroundColor: "#EB5B00", fontSize: "12px", marginBottom: "1rem" }}>Calories</p>
+                    <p style={{ backgroundColor: "#EB5B00" }}>{parseInt(`${vitals.calories}`, 10)}</p>
+                  </div>
+                </div>
+                <div className="vital-container">
+                  <div className="vitals" style={{ backgroundColor: "#FFC470" }}>
+                    <IoTime className="icons" style={{ backgroundColor: "#FFC470", color: "DD5746", marginBottom: "0.5rem" }} />
+                    <p style={{ backgroundColor: "#FFC470", fontSize: "12px", marginBottom: "1rem" }}>Heart Minutes</p>
+                    <p style={{ backgroundColor: "#FFC470" }}>{vitals.heartminute}</p>
+                  </div>
+                  <div className="vitals" style={{ backgroundColor: "#5B99C2" }}>
+                    <MdSportsMartialArts className='icons' style={{ backgroundColor: "#5B99C2", color: "021526", marginBottom: "0.5rem" }} />
+                    <p style={{ backgroundColor: "#5B99C2", fontSize: "12px", marginBottom: "1rem" }}>Active Minutes</p>
+                    <p style={{ backgroundColor: "#5B99C2" }}>{vitals.activeminutes}</p>
+                  </div>
+                </div>
+                <div className="vital-container">
                   <div className="vitals" style={{ backgroundColor: "pink" }}>
                     <FaHeartPulse className="icons" style={{ backgroundColor: "pink", color: "C80036", marginBottom: "0.5rem" }} />
                     <p style={{ backgroundColor: "pink", fontSize: "12px", marginBottom: "1rem" }}>Heart Rate</p>
@@ -181,20 +284,11 @@ const Home: React.FC = () => {
                     <p style={{ backgroundColor: "#B9FFF8" }}>--/-- mm Hg</p>
                   </div>
                 </div>
-                <div className="preventive-measures">
-                  <h3 style={{ paddingBottom: "1rem" }}>Preventive Measures</h3>
-                  <ul>
-                    <li>Drink warm water every morning.</li>
-                    <li>Go for 30 minutes walk everyday.</li>
-                    <li>Drink more water.</li>
-                    <li>Sleep for at least 8 hours.</li>
-                    <li>No Smoking.</li>
-                  </ul>
-                </div>
+                
               </div>
               <div className="home-container-right">
                 <div className="health-status">
-                  <AreaChart
+                  {/* <AreaChart
                     width={480}
                     height={300}
                     data={data}
@@ -208,7 +302,34 @@ const Home: React.FC = () => {
                     <XAxis style={{ fontSize: "12px" }} dataKey="name" />
                     <YAxis style={{ fontSize: "12px" }} dataKey="pv" />
                     <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
-                  </AreaChart>
+                  </AreaChart> */}
+                  <div
+        style={{
+          justifyContent: "center",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <PieChart width={250} height={250}>
+          <Pie data={data} innerRadius={60} outerRadius={90} dataKey="value">
+            {data.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
+              
+            ))}
+            
+          </Pie>
+        </PieChart>
+        <div className="score" style={{  position: "absolute" }}>{score}</div>
+        <div className="score" style={{fontSize:"0.8rem",  position: "absolute",marginTop:"2rem" }}>Health Score</div>
+        
+      </div>
+                </div>
+                <div className="preventive-measures">
+                 
+                  <div dangerouslySetInnerHTML={{ __html: res }} />
                 </div>
               </div>
             </div>

@@ -1,9 +1,9 @@
 "use client"; 
-
 import React, { useState, useEffect } from 'react';
 import Typewriter from 'typewriter-effect';
 import Home from "../Home/Home";
 import "./main.css";
+import axios from "axios";
 
 const Main = () => {
   const [loading, setLoading] = useState(true);
@@ -12,6 +12,7 @@ const Main = () => {
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [weight, setWeight] = useState('');
+  const [height, setHeight] = useState('');
 
   // Use useEffect to handle the loading state
   useEffect(() => {
@@ -30,10 +31,11 @@ const Main = () => {
     }
   };
 
+
   return (
     <div className="container">
       {loading ? (
-        <div style={{ paddingTop: "0rem" ,backgroundColor:"rgb(245, 245, 245)"}}>
+        <div style={{ paddingTop: "16rem" ,backgroundColor:"rgb(245, 245, 245)"}}>
           <Typewriter
             onInit={(typewriter) => {
               typewriter.typeString('Hi, This is your virtual doctor!')
@@ -84,16 +86,23 @@ const Main = () => {
               <input
                 className="input"
                 type="number"
-                placeholder="Your body weight"
+                placeholder="Your body weight in Kg"
                 value={weight}
                 onChange={(e) => setWeight(e.target.value)}
+              />
+              <input
+                className="input"
+                type="number"
+                placeholder="Your Height in cm"
+                value={height}
+                onChange={(e) => setHeight(e.target.value)}
               />
               <button className="button" onClick={handleNextClick}>
                 Next
               </button>
             </div>
           ) : (
-            <Home />
+            <Home  age={age} height={height} weight={weight} selectedGender={selectedGender} />
           )}
         </>
       )}
